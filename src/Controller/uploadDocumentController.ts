@@ -7,31 +7,93 @@ export const Register = async (req: any, res: Response) => {
   try {
     const { appId } = req.body;
 
-    console.log("appId", "appId");
-    console.log("appId", appId);
+    // console.log("appId", "appId");
+    // console.log("appId", appId);
 
-    // const DocumentsInTheDb = await uploadDocument.create({
-    //   appId,
-    //   profileImage: {
-    //     data: fs.readFileSync(
-    //       path.join(__dirname, "../", "/uploads/" + req.file.filename)
-    //     ),
-    //     contentType: "image/png",
-    //   },
-    // });
-    // if (DocumentInTheDb) {
-    //   res.json({
-    //     message: " Documents Added Successfully  ",
-    //     success: true,
-    //   });
-    // } else {
-    //   return res.status(400).json({
-    //     error: "Property Not Added",
-    //     success: false,
-    //   });
-    // }
+    // console.log(
+    //   "checking the path",
+    //   path.join(__dirname, "../", "/uploads/" + req.files[0].filename)
+    // );
+    // console.log(
+    //   "checking the path",
+    //   path.join(__dirname, "../", "/uploads/" + req.files[1].filename)
+    // );
+    // console.log(
+    //   "checking the path",
+    //   path.join(__dirname, "../", "/uploads/" + req.files[2].filename)
+    // );
+    // console.log(
+    //   "checking the path",
+    //   path.join(__dirname, "../", "/uploads/" + req.files[3].filename)
+    // );
+    // console.log(
+    //   "checking the path",
+    //   path.join(__dirname, "../", "/uploads/" + req.files[4].filename)
+    // );
+    // console.log(
+    //   "checking the path",
+    //   path.join(__dirname, "../", "/uploads/" + req.files[5].filename)
+    // );
+    // console.log(
+    //   "checking the path",
+    //   path.join(__dirname, "../", "/uploads/" + req.files[6].filename)
+    // );
 
-    res.json({ message: "you don't know about me " });
+    console.log();
+
+    const DocumentsInTheDb = await uploadDocument.create({
+      appId,
+      purchaseAgrement: {
+        data: fs.readFileSync(
+          path.join(__dirname, "../", "/uploads/" + req.files[0].filename)
+        ),
+      },
+      brokerOfRecord: {
+        data: fs.readFileSync(
+          path.join(__dirname, "../", "/uploads/" + req.files[1].filename)
+        ),
+        contentType: "image/png",
+      },
+      lmStatemntOrVoidCheck: {
+        data: fs.readFileSync(
+          path.join(__dirname, "../", "/uploads/" + req.files[2].filename)
+        ),
+      },
+      dLicence: {
+        data: fs.readFileSync(
+          path.join(__dirname, "../", "/uploads/" + req.files[3].filename)
+        ),
+        contentType: "image/png",
+      },
+      pHistory: {
+        data: fs.readFileSync(
+          path.join(__dirname, "../", "/uploads/" + req.files[4].filename)
+        ),
+        contentType: "image/png",
+      },
+      another: {
+        data: fs.readFileSync(
+          path.join(__dirname, "../", "/uploads/" + req.files[5].filename)
+        ),
+        contentType: "image/png",
+      },
+    });
+
+    console.log("DocumentsInTheDb", DocumentsInTheDb);
+
+    if (DocumentsInTheDb) {
+      res.json({
+        message: " Documents Added Successfully  ",
+        success: true,
+      });
+    } else {
+      return res.status(400).json({
+        error: "Property Not Added",
+        success: false,
+      });
+    }
+
+    // res.json({ message: "you don't know about me " });
   } catch (error: any) {
     res.status(500).json({ message: error.message, success: false });
   }

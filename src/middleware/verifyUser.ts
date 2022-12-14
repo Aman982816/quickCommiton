@@ -11,6 +11,7 @@ export const verifyUser = (req: any, res: Response, next: NextFunction) => {
   try {
     const data: any = jwt.verify(token, JWT_SECRET);
     req.user = data.user;
+    // console.log("data of user in verify ", data);
     next();
   } catch (error) {
     res.status(401).send({ error: "Please authenticate using a valid token" });

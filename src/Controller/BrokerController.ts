@@ -1,9 +1,12 @@
 import { Request, Response } from "express";
 import { Schema, model } from "mongoose";
+import Application from "../Models/Application";
 import Broker from "../Models/Broker";
 
 export const Register = async (req: Request, res: Response) => {
   try {
+    const myApplication = await Application.find({});
+
     //Registering Employee in the Db
     const RegisterdBroker = await Broker.create({
       ...req.body,
@@ -125,12 +128,10 @@ export const Edit = async (req: Request, res: Response) => {
       updatingBroker.bemail = req.body.bemail;
     }
 
-    console.log(req.body.appId);
-
     //finding Broker and updating
 
     const updatedBroker = await Broker.findOneAndUpdate(
-      appId,
+      { appId: `${req.body.appId}` },
       { $set: updatingBroker },
       { new: true }
     );

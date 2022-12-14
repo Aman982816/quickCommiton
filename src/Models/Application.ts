@@ -28,8 +28,8 @@ export interface ApplicationType {
 const ApplicationSchema = new Schema<ApplicationType>({
   userid: {
     type: Schema.Types.ObjectId,
-    required: true,
     ref: User,
+    required: true,
     unique: true,
   },
 
