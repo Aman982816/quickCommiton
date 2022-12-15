@@ -39,7 +39,7 @@ export const Register = async (req: any, res: Response) => {
     //   path.join(__dirname, "../", "/uploads/" + req.files[6].filename)
     // );
 
-    console.log();
+    // console.log(req.files);
 
     const DocumentsInTheDb = await uploadDocument.create({
       appId,
@@ -99,55 +99,34 @@ export const Register = async (req: any, res: Response) => {
   }
 };
 
-// export const Get = async (req: Request, res: Response) => {
-//   try {
-//     const { appId } = req.body;
+export const Get = async (req: Request, res: Response) => {
+  try {
+    const { appId } = req.body;
 
-//     const PropertyInDb = await Property.find({ appId });
+    const DocumentsInDb = await uploadDocument.find({ appId });
 
-//     if (PropertyInDb == null || PropertyInDb.length == 0 || !PropertyInDb) {
-//       return res.status(400).json({
-//         error: "SaleConformation details  not found ",
-//         success: false,
-//       });
-//     } else {
-//       res.json({
-//         message: "Details fetched Successfully ",
-//         data: PropertyInDb,
-//       });
-//     }
-//   } catch (error: any) {
-//     res.status(500).json({ message: error.message, success: false });
-//   }
-// };
+    if (DocumentsInDb == null || DocumentsInDb.length == 0 || !DocumentsInDb) {
+      return res.status(400).json({
+        error: "Documents not found ",
+        success: false,
+      });
+    } else {
+      res.json({
+        message: "Documents fetched Successfully ",
+        data: DocumentsInDb,
+        success: true,
+      });
+    }
+  } catch (error: any) {
+    res.status(500).json({ message: error.message, success: false });
+  }
+};
 
 // export const Edit = async (req: Request, res: Response) => {
 //   try {
-//     const {
-//       appId,
-//       address,
-//       state,
-//       sellerName,
-//       finalSalesPrice,
-//       city,
-//       zipcode,
-//       buyerName,
-//       ClosingDate,
-//       isShortSale,
-//     } = req.body;
+//     const { appId } = req.body;
 
-//     const updatingProperty: PropertyType = {
-//       appId,
-//       address,
-//       state,
-//       sellerName,
-//       finalSalesPrice,
-//       city,
-//       zipcode,
-//       buyerName,
-//       ClosingDate,
-//       isShortSale,
-//     };
+//     const updatingDoucments: any = {};
 
 //     if (address) {
 //       updatingProperty.address = req.body.address;

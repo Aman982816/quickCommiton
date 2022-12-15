@@ -6,9 +6,9 @@ export interface PropertyType {
   address: String;
   state: String;
   sellerName: String;
-  finalSalesPrice: number;
+  finalSalesPrice: string;
   city: String;
-  zipcode: number;
+  zipcode: String;
   buyerName: String;
   ClosingDate: Date;
   isShortSale: boolean;
@@ -42,7 +42,7 @@ const PropertySchema = new Schema<PropertyType>({
     maxlength: 15,
   },
   finalSalesPrice: {
-    type: Number,
+    type: String,
     required: true,
     minlength: 1,
     maxlength: 25,
@@ -54,7 +54,7 @@ const PropertySchema = new Schema<PropertyType>({
   },
 
   zipcode: {
-    type: Number,
+    type: String,
     required: true,
     minlength: 6,
     maxlength: 8,

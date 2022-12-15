@@ -23,6 +23,7 @@ export interface ApplicationType {
     isPending: boolean;
   };
   amount: number;
+  isAgreeTerms: "Yes" | "No";
 }
 
 const ApplicationSchema = new Schema<ApplicationType>({
@@ -52,6 +53,10 @@ const ApplicationSchema = new Schema<ApplicationType>({
     default: false,
   },
   isSaleCompleted: {
+    type: Boolean,
+    default: false,
+  },
+  isBrokerCompleted: {
     type: Boolean,
     default: false,
   },
@@ -85,6 +90,10 @@ const ApplicationSchema = new Schema<ApplicationType>({
   amount: {
     type: Number,
     required: true,
+  },
+  isAgreeTerms: {
+    type: String,
+    default: "Yes",
   },
 });
 const Application = model<ApplicationType>("Application", ApplicationSchema);

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { verifyUser } from "../middleware/verifyUser";
 
-import { Register } from "../Controller/uploadDocumentController";
+import { Register, Get } from "../Controller/uploadDocumentController";
 const fs = require("fs");
 const path = require("path");
 const multer = require("multer");
@@ -24,10 +24,10 @@ const upload = multer({ storage: storage });
 
 const router = Router();
 
-router.post("/register", verifyUser, upload.array("files", 8), Register);
+router.post("/register", verifyUser, upload.array("files", 6), Register);
 
-// router.post("/get", verifyUser, Get);
+router.post("/get", verifyUser, Get);
 
-// router.post("/edit", verifyUser, Edit);
+// router.post("/edit", verifyUser, upload.array("files", 6), Edit);
 
 export default router;

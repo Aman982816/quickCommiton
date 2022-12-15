@@ -6,7 +6,7 @@ interface client {
   firstName: String;
   lastName: String;
   email: String;
-  phone: number;
+  phone: String;
   HomeAddress: String;
   city: String;
   state: String;
@@ -35,7 +35,7 @@ const ClientSchema = new Schema<client>({
     required: true,
   },
   phone: {
-    type: Number,
+    type: String,
     required: true,
     minlength: 10,
   },

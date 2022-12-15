@@ -31,6 +31,7 @@ export const Register = async (req: Request, res: Response) => {
     const data = {
       user: {
         id: RegisterdUser._id,
+        isAdmin: RegisterdUser.isAdmin,
       },
     };
     const authtoken = jwt.sign(data, process.env.JWT_SECRET);
@@ -77,6 +78,7 @@ export const Login = async (req: Request, res: Response) => {
     const data = {
       user: {
         id: loggedinUser[0]._id,
+        isAdmin: loggedinUser[0].isAdmin,
       },
     };
 
@@ -87,6 +89,23 @@ export const Login = async (req: Request, res: Response) => {
     res.json({
       message: " Successfully Logged in ",
       authtoken: authtoken,
+      success: true,
+    });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message, success: false });
+  }
+};
+
+// checking admin login  Remote it in deployment
+export const adminLogin = async (req: any, res: Response) => {
+  try {
+    //Destructuring data from request
+
+    req.user;
+
+    res.json({
+      message: " Successfully Logged in ",
+      authtoken: req.user,
       success: true,
     });
   } catch (error: any) {

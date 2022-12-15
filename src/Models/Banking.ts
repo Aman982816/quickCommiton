@@ -51,7 +51,6 @@ const BankingSchema = new Schema<BankingType>({
   },
   isAddressSame: {
     type: Boolean,
-    required: true,
     default: false,
   },
   statementAddress: {

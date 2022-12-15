@@ -1,5 +1,13 @@
 import { Request, Response } from "express";
+import Agent from "../Models/Agent";
 import Application, { ApplicationType } from "../Models/Application";
+import Banking from "../Models/Banking";
+import Broker from "../Models/Broker";
+import Client from "../Models/Client";
+import ClosingCompany from "../Models/ClosingCompay";
+import Property from "../Models/Property";
+import SaleConformation from "../Models/SaleConformation";
+import uploadDocument from "../Models/uploadDocument";
 
 export const Register = async (req: any, res: Response) => {
   try {
@@ -11,9 +19,13 @@ export const Register = async (req: any, res: Response) => {
     });
 
     //sending Application in User response
-    res.json({
-      message: " Application Successfully Registerd",
-    });
+    if (RegisterdApplication) {
+      res.json({
+        message: " Application Successfully Registerd",
+        data: { appId: RegisterdApplication._id },
+        success: true,
+      });
+    }
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
@@ -124,6 +136,111 @@ export const Edit = async (req: Request, res: Response) => {
     }
   } catch (error: any) {
     res.status(500).json({ message: error.message });
+  }
+};
+export const All = async (req: any, res: Response) => {
+  try {
+    // const { userid } = req.body;
+
+    const user = req.user;
+
+    if (req.user.isAdmin === true) {
+      //geting All Application from the Db
+      const AllApplicatons: any = await Application.find({});
+
+      //Taking AppId form the All Applications and Storing in An Array
+
+      const AppIdArry = AllApplicatons.map((element: any) =>
+        element._id.toString()
+      );
+
+      // console.log({ AppIdArry });
+
+      // const AllApplicationData: any = [];
+
+      const AllApplicationData: any = AppIdArry.map(
+        async (appId: any): Promise<any> => {
+          const ApplicationDetails = await Application.find({ _id: appId });
+          const client = await Client.find({ appId });
+          const isSalesConformation = await SaleConformation.find({
+            appId,
+          });
+          const PropertyDetails = await Property.find({
+            appId,
+          });
+          const AgentDetails = await Agent.find({
+            appId,
+          });
+          const ClosingCompanyDetails = await ClosingCompany.find({
+            appId,
+          });
+          const BrokerDetails = await Broker.find({
+            appId,
+          });
+          const BankingDetails = await Banking.find({
+            appId,
+          });
+          // const doucmentDetails = await uploadDocument.find({
+          //   appId,
+          // });
+
+          const result = await Promise.all([
+            Promise.resolve(ApplicationDetails),
+            Promise.resolve(client),
+            Promise.resolve(isSalesConformation),
+            Promise.resolve(PropertyDetails),
+            Promise.resolve(AgentDetails),
+            Promise.resolve(ClosingCompanyDetails),
+            Promise.resolve(BrokerDetails),
+            Promise.resolve(BankingDetails),
+          ]);
+
+          return result;
+
+          // return {
+          //   ApplicationDetails,
+          //   client,
+          //   isSalesConformation,
+          //   PropertyDetails,
+          //   AgentDetails,
+          //   ClosingCompanyDetails,
+          //   BrokerDetails,
+          //   BankingDetails,
+          // };
+        }
+      );
+
+      console.log(AllApplicationData);
+
+      res.json({
+        message: "You can get the data   ",
+        success: true,
+        data: AllApplicationData,
+      });
+    } else {
+      res.json({
+        message: "You don't have access of it  ",
+        success: false,
+      });
+    }
+
+    // const ApplicationInDb = await Application.find({ userid });
+    // console.log(ApplicationInDb.length);
+
+    // if (ApplicationInDb.length == 0 || !ApplicationInDb) {
+    //   return res.status(400).json({
+    //     error: "Application not found ",
+    //     success: false,
+    //   });
+    // }
+
+    // //sending Appllication User response
+    // res.json({
+    //   message: "fetched Successfully ",
+    //   data: ApplicationInDb,
+    // });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message, success: false });
   }
 };
 export const Get = async (req: any, res: Response) => {

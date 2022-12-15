@@ -5,6 +5,7 @@ interface usertype {
   lastName: String;
   email: String;
   password: String;
+  isAdmin: boolean;
 }
 
 const UserSchema = new Schema<usertype>({
@@ -25,6 +26,11 @@ const UserSchema = new Schema<usertype>({
   password: {
     type: String,
     required: true,
+  },
+  isAdmin: {
+    type: Boolean,
+    required: true,
+    default: false,
   },
 });
 const User = model<usertype>("User", UserSchema);

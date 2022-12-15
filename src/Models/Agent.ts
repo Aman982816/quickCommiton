@@ -6,7 +6,7 @@ export interface AgentType {
   netCommission?: number;
   typeOfAgent?: {
     isListing?: boolean;
-    isAgent?: boolean;
+    isSelling?: boolean;
   };
 
   totalTransactions: number;
@@ -31,7 +31,7 @@ const AgentSchema = new Schema<AgentType>({
       type: Boolean,
       required: true,
     },
-    isAgent: {
+    isSelling: {
       type: Boolean,
       required: true,
     },
